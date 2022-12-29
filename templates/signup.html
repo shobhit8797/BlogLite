@@ -1,25 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/signup.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <form action="/signup" method="post">
-        <input type="email" name="email" id="email">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
+        <h4 class="title">Log In!</h4>
+      <div class="form-control">
+        <input type="text" name="username" required="" />
+        <label>
+          <span style="transition-delay: 0ms">U</span>
+          <span style="transition-delay: 50ms">s</span>
+          <span style="transition-delay: 100ms">e</span>
+          <span style="transition-delay: 150ms">r</span>
+          <span style="transition-delay: 200ms">n</span>
+          <span style="transition-delay: 250ms">a</span>
+          <span style="transition-delay: 300ms">m</span>
+          <span style="transition-delay: 350ms">e</span>
+        </label>
+      </div>
+      <div class="form-control">
+        <input type="email" name="email" required="" />
+        <label>
+          <span style="transition-delay: 0ms">E</span>
+          <span style="transition-delay: 50ms">m</span>
+          <span style="transition-delay: 100ms">a</span>
+          <span style="transition-delay: 150ms">i</span>
+          <span style="transition-delay: 200ms">l</span>
+        </label>
+      </div>
+      <div class="form-control">
+        <input type="text" name="name" required="" />
+        <label>
+          <span style="transition-delay: 0ms">F</span>
+          <span style="transition-delay: 50ms">u</span>
+          <span style="transition-delay: 100ms">l</span>
+          <span style="transition-delay: 150ms">l</span>
+          <span style="transition-delay: 200ms"> </span>
+          <span style="transition-delay: 250ms">N</span>
+          <span style="transition-delay: 300ms">a</span>
+          <span style="transition-delay: 350ms">m</span>
+          <span style="transition-delay: 400ms">e</span>
+        </label>
+      </div>
 
-        <input type="text" name="fname" id="fname">
-        <input type="text" name="lname" id="lname">
+      <div class="form-control">
+        <input type="text" name="password" required="" />
+        <label>
+          <span style="transition-delay: 0ms">P</span>
+          <span style="transition-delay: 50ms">a</span>
+             <span style="transition-delay: 100ms">s</span>
+          <span style="transition-delay: 150ms">s</span>
+          <span style="transition-delay: 200ms">w</span>
+          <span style="transition-delay: 250ms">o</span>
+          <span style="transition-delay: 300ms">r</span>
+          <span style="transition-delay: 350ms">d</span>
+        </label>
+      </div>
+      <div class="form-control">
+        <input type="text" name="phn" />
+        <label>
+          <span style="transition-delay: 0ms">C</span>
+          <span style="transition-delay: 50ms">o</span>
+          <span style="transition-delay: 100ms">n</span>
+          <span style="transition-delay: 150ms">t</span>
+          <span style="transition-delay: 200ms">a</span>
+          <span style="transition-delay: 250ms">c</span>
+          <span style="transition-delay: 300ms">t</span>
+        </label>
+      </div>
 
-        <input type="number" name="phn" id="phn">
-        <!-- <input type="date" name="dob" id="dob"> -->
-        
-        <input type="submit" value="Sign Up">
+      <button class="btn" type="submit">Login</button>
+
+        <a href="{{ url_for('login')}}" class="btn-link">Sign Up</a>
     </form>
-</div>
-</body>
+  </body>
 </html>

@@ -1,15 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    
-    <title>Document</title>
-</head>
-<body>
-    {% extends "nav.html" %}
-    
-</body>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <link rel="stylesheet" href="/static/css/navbar.css" />
+
+    <title>Feed</title>
+  </head>
+  <body>
+    {% include 'navbar.html' without context %}
+    <div class="main-body ">
+      {% include 'nav.html' without context %}
+      <div class="feed_page">
+        <div class="new_post">
+          <div class="postcard">
+            <div class="postcard-content">
+              <div class="postcard-content-text">
+                <textarea
+                  name="post"
+                  id="post"
+                  cols="30"
+                  rows="10"
+                  placeholder="What's on your mind?"
+                ></textarea>
+              </div>
+            </div>
+            <div class="postcard-actions">
+              <div class="postcard-actions-btn">
+                <button class="btn">Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="user-feed">
+          <div class="card">
+            post_feed
+            <div class="user-post-pic">
+              <img src="/static/assets/avatar.png" alt="Post owner pic" />
+            </div>
+            <div class="post_user_name_display">usernameX</div>
+
+            <div class="actual_post">
+              This is actual post <br />
+              This is actual post <br />
+              This is actual post <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

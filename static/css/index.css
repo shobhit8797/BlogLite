@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.user-feed {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+.feed_page {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+/* Card for creating new post */
+.new_post {
+  width: 60%;
+  height: max-content;
+  border-radius: 30px;
+  background: #e0e0e0;
+  box-shadow: -1px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  margin-top: 20px;
+}
+/* Users feed's Post Card css  */
+.card {
+  width: 60%;
+  height: max-content;
+  border-radius: 30px;
+  background: #e0e0e0;
+  box-shadow: -1px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  position: absolute;
+}
+
+@keyframes load89234 {
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.user-post-pic > img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    float: left;
+    /* background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%); */
+    /* border-radius: 50%; */
+    /* background-size: 200% 100%; */
+    /* background-position: 100% 0; */
+    animation: load89234 2s infinite;
+  
+}
+.post_user_name_display
+{
+  font-weight: 600;
+  letter-spacing: 1px;
+}
