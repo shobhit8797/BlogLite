@@ -1,4 +1,4 @@
-body
+/* body
 {
     margin: 0px;
     padding: 0px;
@@ -8,14 +8,14 @@ ul
     list-style-type: none;
     margin: 0;
     padding: 0;
-    /* background-color: #333; */
-}
-a
+    background-color: #333;
+} */
+/* a
 {
     text-decoration: none;
     color: #000000;
-}
-.column
+} */
+/* .column
 {
     display: flex;
     flex-direction: column;
@@ -30,3 +30,4 @@ a
 {
     align-items: center;
 }
+ */

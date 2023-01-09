@@ -11,7 +11,7 @@
   <body>
     <div class="card">
       <h4 class="title">Log In!</h4>
-      <form action="/login" method="POST">
+      <form id="login_form" action="#">
         <div class="field">
           <svg
             class="input-icon"
@@ -43,18 +43,20 @@
           </svg>
           <input
             autocomplete="off"
-            id="logpass"
+            id="password"
             placeholder="Password"
             class="input-field"
             name="password"
             type="password"
           />
         </div>
-        <button class="btn" type="submit">Login</button>
+        <button class="btn"  id='login-btn' type="submit">Login</button>
 
         <a href="{{ url_for('signup')}}" class="btn-link">Sign Up</a>
         <a href="#" class="btn-link">Forgot your password?</a>
       </form>
     </div>
+
+    <script src="/static/javascript/base.js"></script>
   </body>
 </html>

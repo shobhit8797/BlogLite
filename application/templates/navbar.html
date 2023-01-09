@@ -9,12 +9,12 @@
       <div class="navbar_menu">
         <ul>
           <li class="navbar_menu_item">
-            <a href="/profile"
+            <a href='/{{current_user.username}}'
               ><i class="material-icons">account_circle</i> Profile</a
             >
           </li>
-          <li class="navbar_menu_item">
-            <a href="/logout">
+          <li class="navbar_menu_item" onclick='logout()'>
+            <a>
               <i class="material-icons">power_settings_new</i> Logout</a
             >
           </li>
@@ -23,3 +23,12 @@
     </button>
   </div>
 </div>
+
+<!-- .then((data) => {
+  console.log(response);
+  console.log(Response);
+  if (data.success) {
+    console.log(data.message);
+    window.location.href = "/login";
+  }
+} -->

@@ -36,14 +36,14 @@ a {
   margin-top: 20px;
 }
 /* Users feed's Post Card css  */
-.card {
+/* .card {
   width: 60%;
   height: max-content;
   border-radius: 30px;
   background: #e0e0e0;
   box-shadow: -1px 15px 30px #bebebe, -15px -15px 30px #ffffff;
   position: absolute;
-}
+} */
 
 @keyframes load89234 {
   100% {

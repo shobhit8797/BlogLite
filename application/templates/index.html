@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+Feed
+{% endblock %}
+
+{% block content %}
+<div class="feed_page">
+  <div class="new_post">
+    <form class="postcard" id="postcard">
+          <input type="text" name='title' id='post_title' placeholder="Title">
+          <input name="post_content" id="post_content" placeholder="Start a post" />
+          <input type="submit" value="Post">
+      </div>
+    </form>
+  </div>
+  <div class="user-feed">
+    <div class="card">
+      post_feed
+      <div class="user-post-pic">
+        <img src="/static/assets/avatar.png" alt="Post owner pic" />
+      </div>
+      <div class="post_user_name_display">usernameX</div>
+
+      <div class="actual_post">
+        This is actual post <br />
+        This is actual post <br />
+        This is actual post <br />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

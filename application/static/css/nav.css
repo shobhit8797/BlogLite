@@ -22,7 +22,7 @@
   width: 2.5em;
   border-radius: 43px;
   background: #ffffff;
-  box-shadow: 0px 0px 10px #a8a8a8, inset -5px 5px i10px #ffffff;
+  box-shadow: 0px 0px 10px #a8a8a8, inset -5px 5px 10px #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
