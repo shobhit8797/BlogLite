@@ -19,10 +19,10 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable= False)
+    email = db.Column(db.String, unique=True, nullable=False)
     name = db.Column(db.String(128))
-    phn = db.Column(db.String(10), unique=True, nullable= True)
-    bio = db.Column(db.Text, nullable= True)
+    phn = db.Column(db.Integer(), nullable=True)
+    bio = db.Column(db.Text, nullable = True)
 
     password = db.Column(db.String(128), nullable= False)
 
@@ -62,10 +62,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(128), nullable=True)
     content = db.Column(db.Text, nullable=False)
-   
     username = db.Column(db.String(50), db.ForeignKey('user.username'))
-
-
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     last_modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
@@ -74,6 +71,18 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(255))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', backref=db.backref('images', lazy='dynamic'))
+
+class Video(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(255))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', backref=db.backref('videos', lazy='dynamic'))
 
 class Comment(db.Model):
     __tablename__ = 'comment'

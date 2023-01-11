@@ -1,20 +1,19 @@
-{% extends 'base.html' %}
-{% block title %}
-Search
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %} Search {% endblock %} {% block
+content %}
 
 <div class="container">
-    <div class="m-auto">
-    <form action="/search" method="post">
-        <input type="text" name="search" placeholder="Search">
-        <input type="submit" value="Search">
+  <div class="m-auto">
+    <form id="search-username">
+      <input
+        type="text"
+        id="username-input"
+        name="search"
+        placeholder="Search"
+      />
+      <input type="submit" value="Search" />
     </form>
-    </div>
+  </div>
 
-    <div>
-
-    </div>
+  <div id="display-username" class="w-75"></div>
 </div>
 {% endblock %}

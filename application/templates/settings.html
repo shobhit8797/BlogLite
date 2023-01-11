@@ -1,50 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/static/css/base.css" />
-    <link rel="stylesheet" href="/static/css/nav.css" />
-    <link rel="stylesheet" href="/static/css/profile.css" />
-    <link rel="stylesheet" href="/static/css/navbar.css" />
-    <link rel="stylesheet" href="/static/css/settings.css" />
-    <title>Username</title>
-  </head>
-  <body>
-    {% include 'navbar.html' without context %}
-    <div class="main-body row">
-      {% include 'nav.html' without context %}
-
-      <div class="settings row">
-        <div class="settings_nav">
-          <ul>
-            <li class="set_nav_li">
-              <a href="/settings/edit_profile">Edit Profile</a>
-            </li>
-            <li class="set_nav_li">
-              <a href="/settings/change_password"> Change Password </a>
-            </li>
-            <li class="set_nav_li">
-              <a href="/settings/delete_account"> Delete Account </a>
-            </li>
-          </ul>
-        </div>
-        <div class="settings_active column align-center">
-        {% if request.path == '/settings/edit_profile': %}
-          {% include 'edit_profile.html' without context %}
-        {% elif request.path == '/settings/change_password': %}
-          {% include 'change_password.html' without context %}
-        {% elif request.path == '/settings/delete_account': %}
-          {% include 'delete_account.html' without context %}
-{% endif %}
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %} {% block title %} Search {% endblock %} {% block
+content %}
+<div class="settings row">
+  <div class="settings_nav">
+    <ul>
+      <li class="set_nav_li">
+        <a href="/settings/edit_profile">Edit Profile</a>
+      </li>
+      <li class="set_nav_li">
+        <a href="/settings/change_password"> Change Password </a>
+      </li>
+      <li class="set_nav_li">
+        <a href="/settings/delete_account"> Delete Account </a>
+      </li>
+    </ul>
+  </div>
+  <div class="settings_active column align-center">
+    {% if active == 'edit_profile': %}
+    {% include 'edit_profile.html' without context %}
+    {% elif active == 'change_password': %}
+    {% include 'change_password.html' %}
+    {% elif active == 'delete_account': %}
+    {% include 'delete_account.html' without context %} {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -30,32 +30,12 @@ def index():
 
 @app.route('/settings', defaults={'active': None})
 @app.route('/settings/<active>')
+@login_required
 def settings(active):
     if active == None:
-        active = 'profile'
+        active = 'edit_profile'
     return render_template('settings.html', active=active)
 
-@app.route('/edit_profile', methods=['GET', 'POST'])
-def edit_profile():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        name = request.form['name']
-        email = request.form['email']
-        phn = request.form['phn']
-        user = User.query.filter_by(username=username).first()
-        if user:
-            user.password = password
-            user.name = name
-            user.email = email
-            user.phn = phn
-            db.session.commit()
-            return redirect(url_for('profile'))
-        else:
-            # flash('Username does not exist')
-            return redirect(url_for('edit_profile'))
-    else:
-        return render_template('settings.html')
 
 @app.route('/search', methods=['GET', 'POST'])
 @login_required

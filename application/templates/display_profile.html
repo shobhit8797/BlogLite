@@ -34,14 +34,24 @@ content %}
   </div>
 
   {% if user.username == current_user.username %}
-  <a class="mt-5 w-100 btn btn-secondary" href="/edit_profile" role="button">
+  <a class="mt-5 w-100 btn btn-secondary" href="{{ url_for('settings') }}" role="button">
     Edit Profile
   </a>
   {% else %}
-  <form id="follow_form" action="{{url_for('follow_user')}}" method="post">
-    <input type="hidden" name="follow_user" id="follow_user" value="{{user.username}}" />
+  <form id="follow_form">
+    <input
+      type="hidden"
+      name="follow_user"
+      id="follow_user"
+      value="{{user.username}}"
+    />
 
-    <input class="btn btn-primary mt-5 w-75" id="follow-btn" type="submit" value="Follow" />
+    <input
+      class="btn btn-primary mt-5 w-75"
+      id="follow-btn"
+      type="submit"
+      value="Follow"
+    />
   </form>
 
   {% endif %}
@@ -50,5 +60,5 @@ content %}
     <h4>All Posts</h4>
     {% for post in user.posts %} {% include 'post_template.html' %} {% endfor %}
   </div>
- {% endblock %}
+  {% endblock %}
 </div>

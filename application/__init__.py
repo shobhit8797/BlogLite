@@ -1,5 +1,6 @@
 # Import Flask modules
 from flask import Flask
+from os.path import join, dirname, realpath
 
 from flask_migrate import Migrate  
 from flask_sqlalchemy import SQLAlchemy
@@ -7,11 +8,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_restful import Resource, Api
 
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/..')
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 # Initialize Flask app with the template folder address
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SECRET_KEY'] = 'ec9439cfc6c796ae2029594d'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the database
 db = SQLAlchemy(app)
@@ -29,6 +33,8 @@ from application.apis import *
 api.add_resource(UserSignup,'/api/signup')
 api.add_resource(UserLogin, '/api/login')
 api.add_resource(UserLogout, '/api/logout')
-api.add_resource(UserAPI, '/api/<string:username>')
+api.add_resource(UserAPI, '/api/user' ,'/api/<string:username>')
 api.add_resource(PostAPI, '/api/posts', '/api/posts/<int:post_id>')
 api.add_resource(Follow, '/api/follow')
+api.add_resource(SearchUser, '/api/user/<username>')
+api.add_resource(Feed, '/api/feed')
