@@ -154,12 +154,16 @@ class PostAPI(Resource):
         db.session.flush()
         
         image = request.files['post_pic']
-        filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # print('--------------------')
+        # print(image.filename)
+        # print('--------------------')
+        if image.filename:
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        image_url = f"static/uploads/{filename}"
-        image = Image(url=image_url, post_id=post.id)
-        db.session.add(image)
+            image_url = f"static/uploads/{filename}"
+            image = Image(url=image_url, post_id=post.id)
+            db.session.add(image)
 
         db.session.commit()
         return '', 200
@@ -181,7 +185,9 @@ class FollowApi(Resource):
             username = request.get_json()['follow_user']
             follow_toggle = request.get_json()['follow_toggle']
             following_user = User.query.filter_by(username=username).first()
-            # current_user = current_user
+
+            print('-------',follow_toggle,'--------')
+            
 
             if follow_toggle == 'Follow':
                 try:
@@ -234,13 +240,27 @@ class Feed(Resource):
     @marshal_with(post_get)
     def get(self):
         try:
-            # user = current_user.username
-            posts = Post.query.join(User, Post.author_id == User.id).filter(User.id.in_(current_user.following)).all()
+           
+            user = User.query.filter_by(username=current_user.username).first()
+            if not user:
+                return {'message':f"user with name {current_user} does not exist"}, 404
             
+            
+            following = user.following
+           
+            posts = []
+            for follow in following:
+                for post in follow.posts:
+                    posts.append(post)
             print(posts)
+            print('-------------------------')
+            try:
+                sorted_posts = sorted(posts, key=lambda post: post.date_posted, reverse=True)
+            except Exception as e:
+                    print('Error occured here:',str(e))
+                    return {'message':"Successfully unfollowed user"}, 400
 
-            return posts, 200
-        
-        except:
-            return 'error', 404
-
+            print('-------------------------')
+            return sorted_posts, 200
+        except Exception as e:
+            return jsonify(message=f"Error while trying to fetch feed: {e}"), 500

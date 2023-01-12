@@ -25,7 +25,9 @@ def login():
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    posts = Post.query.filter(Post.username.in_([user.username for user in current_user.following])).all()
+    print(posts)
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/settings', defaults={'active': None})

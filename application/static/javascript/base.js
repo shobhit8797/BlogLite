@@ -167,23 +167,7 @@ if (window.location.pathname == "/") {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      // for (let i = 0; i < data.length; i++) {
-      //   const post = document.createElement("div");
-      //   post.classList.add("post");
-      //   const post_title = document.createElement("h1");
-      //   post_title.classList.add("post-title");
-      //   post_title.textContent = `${data[i].title}`;
-      //   const post_content = document.createElement("p");
-      //   post_content.classList.add("post-content");
-      //   post_content.textContent = `${data[i].content}`;
-      //   const post_author = document.createElement("p");
-      //   post_author.classList.add("post-author");
-      //   post_author.textContent = `Posted by ${data[i].author}`;
-      //   post.appendChild(post_title);
-      //   post.appendChild(post_content);
-      //   post.appendChild(post_author);
-      //   document.getElementById("posts").appendChild(post);
-      // }
+      console.log(response);
     });
 }
 
