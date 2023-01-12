@@ -157,19 +157,19 @@ if (username_input != null) {
   });
 }
 
-if (window.location.pathname == "/") {
-  fetch("/api/feed", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      console.log(response);
-    });
-}
+// if (window.location.pathname == "/") {
+//   fetch("/api/feed", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log(data);
+//       console.log(response);
+//     });
+// }
 
 if (
   window.location.pathname == "/settings" ||
