@@ -8,51 +8,38 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-following = db.Table('following',
-    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
-)
-
-# creating tables
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     name = db.Column(db.String(128))
     phn = db.Column(db.Integer(), nullable=True)
     bio = db.Column(db.Text, nullable = True)
-
     password = db.Column(db.String(128), nullable= False)
-
     # Defining the authors of the posts by linking the post to the specific user
-    posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete')
-
+    posts = db.relationship('Post'  , backref='author', lazy=True, cascade='all, delete')
     # All the comments that a particular user has posted
     comments = db.relationship('Comment', backref='commenter', lazy=True, cascade='all, delete')
-
     # All the posts that this user has liked
     likes = db.relationship('Like', backref='liker', lazy=True, cascade='all, delete') 
+    
+    
+    following = db.relationship("User",
+                            secondary='follow',
+                            primaryjoin="User.id==Follow.follower_id",
+                            secondaryjoin="User.id==Follow.following_id",
+                            backref="followers")
 
-    followed = db.relationship('User',
-        secondary = following,
-        primaryjoin = (following.c.follower_id == id),
-        secondaryjoin = (following.c.followed_id == id),
-        backref = db.backref('following', lazy = 'dynamic'),
-        lazy = 'dynamic')
-
-    def follow(self, user):
-        if not self.is_following(user):
-            self.following.append(user)
-
-    def unfollow(self, user):
-        if self.is_following(user):
-            self.followed.remove(user)
-
-    def is_following(self, user):
-        return self.followed.filter(following.c.follower_id == user.id).count() > 0
-
+    def is_following(self, user2)->bool:
+        if self is None or user2 is None:
+            raise ValueError(f"user1 or user2 do not exist")
+        follow = Follow.query.filter_by(follower_id=self.id, following_id=user2.id).first()
+        if follow:
+            return True
+        else:
+            return False
+    
     def __repr__(self):
         return f"User('{self.username}'"
 
@@ -71,6 +58,12 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Follow(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    following_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)

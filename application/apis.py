@@ -1,9 +1,9 @@
 import os
 import werkzeug
 from application import db, app
-from application.models import Image, Post, User
+from application.models import Follow, Image, Post, User
 from application.request_code import *
-from flask import request
+from flask import request, jsonify
 from flask_login import login_required, current_user, login_user, logout_user
 from flask_restful import Resource, fields, marshal_with, reqparse
 from werkzeug.utils import secure_filename
@@ -95,15 +95,6 @@ user_get = {
     'phn': fields.String,
     'bio': fields.String,
 }
-# for post request for user api
-# parser = reqparse.RequestParser()
-# parser.add_argument('username', required=True)
-# parser.add_argument('email')
-# parser.add_argument('name')
-# parser.add_argument('phn')
-# parser.add_argument('bio')
-# parser.add_argument('password')
-# path: /api/user, /api/<username>
 class UserAPI(Resource):
     # to get user details
     @marshal_with(user_get)
@@ -154,24 +145,18 @@ class PostAPI(Resource):
             return '', 404
 
     def post(self):
-        
         title = request.form['title']
-        
         content = request.form['post_content']
-        print('hi ', current_user.username)
         author = current_user
-        print('hi ', current_user.username)
-        print('commiting post')
+
         post = Post(title=title, content=content, author=author)
         db.session.add(post)
         db.session.flush()
-        print('processing img')
+        
         image = request.files['post_pic']
         filename = secure_filename(image.filename)
-        print(app.config['UPLOAD_FOLDER'])
-        # image.save(f"static/uploads/{filename}")
         image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        print('saving image url')
+
         image_url = f"static/uploads/{filename}"
         image = Image(url=image_url, post_id=post.id)
         db.session.add(image)
@@ -186,7 +171,8 @@ class PostAPI(Resource):
     def delete(self,post_id):
         pass
 
-class Follow(Resource):
+# Url: /api/follow
+class FollowApi(Resource):
     def get(self):
         raise request_not_allowed(status_code=404, messasge='Not a valid request method')
     
@@ -194,16 +180,35 @@ class Follow(Resource):
         try:
             username = request.get_json()['follow_user']
             follow_toggle = request.get_json()['follow_toggle']
-            user = User.query.filter_by(username=username).first()
-            if user:
-                if follow_toggle == 'follow':
-                    current_user.follow(user)
-                else:
-                    current_user.unfollow(user)
-                db.session.commit()
-                return f'{follow_toggle}ed', 200
+            following_user = User.query.filter_by(username=username).first()
+            # current_user = current_user
+
+            if follow_toggle == 'Follow':
+                try:
+                    if current_user is None or following_user is None:
+                        raise ValueError(f"current_user or following_user do not exist")
+                    
+                    follow = Follow()
+                    follow.follower_id=current_user.id
+                    follow.following_id=following_user.id
+                    db.session.add(follow)
+                    db.session.commit()
+                    return {'message':"Successfully followed user"}, 200
+                except Exception as e:
+                    print('Error occured here:',str(e))
+                    return {'message':str(e)}, 400
+                
             else:
-                raise UserNotFound(status_code=404)
+                try:
+                    unfollow = Follow.query.filter_by(follower_id=current_user.id, following_id=following_user.id).first()
+                    db.session.delete(unfollow)
+                    db.session.commit()
+                    return {'message':"Successfully unfollowed user"}, 200
+                except Exception as e:
+                    print('Error occured here:',str(e))
+                    return {'message':"Successfully unfollowed user"}, 400
+                # except:
+                #     return {'message':"Error while trying to unfollow user"}, 500
         except:
             return "somethig went wrong", 404
     
@@ -229,9 +234,11 @@ class Feed(Resource):
     @marshal_with(post_get)
     def get(self):
         try:
-            user = current_user.username
-            posts = Post.query.filter(Post.username.followed.has(current_user)).all()
+            # user = current_user.username
+            posts = Post.query.join(User, Post.author_id == User.id).filter(User.id.in_(current_user.following)).all()
+            
             print(posts)
+
             return posts, 200
         
         except:

@@ -121,7 +121,11 @@ if (follow_form != null) {
         console.log(response.data);
         console.log(response.body);
       } else {
-        console.log(response);
+        console.log(response.text());
+
+        console.log(response.message);
+  
+        console.log(response.status);
       }
     });
   });

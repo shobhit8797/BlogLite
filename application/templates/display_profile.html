@@ -22,11 +22,11 @@ content %}
           <span class="user_stats_info">posts</span>
         </li>
         <li class="col-4">
-          {{ user.followed.followed_id|length }} <br />
+          {{ user.following.follower_id|length }} <br />
           <span class="user_stats_info">followers</span>
         </li>
         <li class="col-4">
-          {{ user.following.follower_id|length }} <br />
+          {{ user.followers.following_id|length }} <br />
           <span class="user_stats_info">following</span>
         </li>
       </ul>
