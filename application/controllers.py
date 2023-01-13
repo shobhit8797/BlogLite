@@ -26,14 +26,13 @@ def login():
 @login_required
 def index():
     posts = Post.query.filter(Post.username.in_([user.username for user in current_user.following])).all()
-    print(posts)
     return render_template('index.html', posts=posts)
-
 
 @app.route('/settings', defaults={'active': None})
 @app.route('/settings/<active>')
 @login_required
 def settings(active):
+    print(current_user.username)
     if active == None:
         active = 'edit_profile'
     return render_template('settings.html', active=active)

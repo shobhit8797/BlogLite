@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block title %} Feed {% endblock %} {% block content
 %}
 <div class="w-50 m-auto">
-  <form class="w-75 m-auto mt-5" id="postcard" enctype=multipart/form-data>
+  <form class="card p-2 w-75 m-auto mt-5" id="postcard" enctype="multipart/form-data">
     <div class="input-group">
       <input
         type="text"
@@ -19,28 +19,47 @@
         class="form-control"
         placeholder="Start a post"
       />
+      <button
+        class="btn btn-outline-secondary"
+        type="submit"
+        id="button-addon1"
+      >
+        Post
+      </button>
     </div>
-    <label for="formFileMultiple" class="form-label"> Select Images</label>
-    <input
-      class="form-control"
-      id="post_pic"
-      type="file"
-      name="post_pic"
-      accept="image/gif,image/jpeg,image/jpg,image/png"
-      multiple
-    />
-    <button class="btn btn-outline-secondary" type="submit" id="button-addon1">
-      Post
-    </button>
+    <div class="media-btns row">
+      <label class="col-4 mt-2" for="post_pic">
+        <div class="btn btn-info" style="cursor: pointer">Images</div>
+      </label>
+      <input
+        class="form-control"
+        id="post_pic"
+        type="file"
+        name="post_pic"
+        accept="image/*"
+        multiple
+        style="display: none"
+      />
+      <label class="col-4 mt-2" for="video">
+        <div class="btn btn-info" style="cursor: pointer">Videos</div>
+      </label>
+      <input
+        class="form-control"
+        id="video"
+        type="file"
+        name="video"
+        accept="video/*"
+        multiple
+        style="display: none"
+      />
+    </div>
   </form>
+
   <div class="user-feed">
-    {% for follow in current_user.following %}
-      {% for post in follow.posts %}
-        {% with posts=posts+[post] %} {% endwith %}
-      {% endfor %}
-    {% endfor %}
-    {% set sorted_posts = posts|sort(attribute='date_posted', reverse=True) %}
-    {% for post in sorted_posts %} {% include 'post_template.html' %} {% endfor %}
+    {% for follow in current_user.following %} {% for post in follow.posts %} {%
+    with posts=posts+[post] %} {% endwith %} {% endfor %} {% endfor %} {% set
+    sorted_posts = posts|sort(attribute='date_posted', reverse=True) %} {% for
+    post in sorted_posts %} {% include 'post_template.html' %} {% endfor %}
   </div>
 </div>
 

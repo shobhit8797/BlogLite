@@ -95,9 +95,9 @@ user_get = {
     'name': fields.String,
     'phn': fields.String,
     'bio': fields.String,
+    'profile_picture': fields.String,
 }
 class UserAPI(Resource):
-    # to get user details
     @marshal_with(user_get)
     def get(self,username):
         user = User.query.filter_by(username=username).first()
@@ -111,16 +111,24 @@ class UserAPI(Resource):
         return current_user, 200
 
     def put(self):
-        username = request.get_json()['username']
+        username = request.form['username']
         user = User.query.filter_by(username=username).first()
         if user:
-            user.email = request.get_json()['email']
-            user.name = request.get_json()['name']
-            user.phn = request.get_json()['phn']
-            user.bio = request.get_json()['bio']
+            user.email = request.form['email']
+            user.name = request.form['name']
+            user.phn = request.form['phone']
+            user.bio = request.form['bio']
+            db.session.flush()
+            image = request.files['profile_picture']
+            if image.filename:
+                image = request.files['profile_picture']
+                filename = secure_filename(image.filename)
+                user.profile_picture = f"static/uploads/{filename}"
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             db.session.commit()
             return '', 200
         else:
+            db.rollback()
             return '', 404
  
     def delete(self):
@@ -149,23 +157,16 @@ class PostAPI(Resource):
         title = request.form['title']
         content = request.form['post_content']
         author = current_user
-
         post = Post(title=title, content=content, author=author)
         db.session.add(post)
         db.session.flush()
-        
         image = request.files['post_pic']
-        # print('--------------------')
-        # print(image.filename)
-        # print('--------------------')
         if image.filename:
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
             image_url = f"static/uploads/{filename}"
             image = Image(url=image_url, post_id=post.id)
             db.session.add(image)
-
         db.session.commit()
         return '', 200
 
@@ -234,7 +235,6 @@ class SearchUser(Resource):
             return usernames, 200
         except:
             return 'worng Input', 404
-
 
 # path: /api/feed
 class Feed(Resource):

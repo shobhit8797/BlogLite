@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block title %} Search {% endblock %} {% block
 content %}
-<div class="settings row">
+<div class="settings row bg-dark border border-light rounded ">
   <div class="settings_nav">
     <ul>
       <li class="set_nav_li">
@@ -16,11 +16,11 @@ content %}
   </div>
   <div class="settings_active column align-center">
     {% if active == 'edit_profile': %}
-    {% include 'edit_profile.html' without context %}
+    {% include 'edit_profile.html' %}
     {% elif active == 'change_password': %}
     {% include 'change_password.html' %}
     {% elif active == 'delete_account': %}
-    {% include 'delete_account.html' without context %} {% endif %}
+    {% include 'delete_account.html' %} {% endif %}
   </div>
 </div>
 {% endblock %}

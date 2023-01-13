@@ -1,74 +1,110 @@
 <div class="mb-3">
-  <button onclick="editProfile()">Edit</button>
+  <button class="align-middle btn btn-warning text-primary-emphasis text-end" onclick="editProfile()">
+    <i class="material-icons">edit</i>Edit
+  </button>
   <form id="edit_profile">
-    <div class="row">
-      <div class="column">
-        <label class="form-label mt-3" for="username">Username</label>
-        <input
-          readonly
-          class="form-control-plaintext"
-          type="text"
-          name="username"
-          id="username"
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        >Profile Picture <small>(click to chose)</small></span
+      >
+      <label class="col-4" for="profile_picture">
+        {% if current_user.profile_picture %}
+        <img
+        class="rounded-circle"
+          style="
+            cursor: pointer;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+          "
+          src="{{current_user.profile_picture}}?d=mp&f=y"
+          id="avatar"
+          alt="avatar"
         />
-      </div>
-      <div class="column">
-        <label class="form-label mt-3" for="name">Name</label>
-        <input
-          readonly
-          class="form-control-plaintext"
-          type="text"
-          name="name"
-          id="name"
+        {% else %}
+        <img
+          style="cursor: pointer"
+          src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+          id="avatar"
+          alt="avatar"
         />
-      </div>
+        {% endif %}
+      </label>
+      <input
+        class="col-5 d-inline-block form-control visually-hidden"
+        type="file"
+        name="profile_picture"
+        id="profile_picture"
+        accept="image/*"
+        disabled
+      />
     </div>
-    <div class="row">
-      <div class="column">
-        <label class="form-label mt-3" for="email">Email</label>
-        <input
-          readonly
-          class="form-control-plaintext"
-          type="email"
-          name="email"
-          id="email"
-        />
-      </div>
-      <div class="column">
-        <label class="form-label mt-3" for="phone">Phone</label>
-        <input
-          readonly
-          class="form-control-plaintext"
-          type="text"
-          name="phone"
-          id="phone"
-        />
-      </div>
-    </div>
-    <div class="row">
-      <div class="column">
-        <label class="form-label mt-3" for="bio">Bio</label>
-        <textarea
-          readonly
-          class="form-control-plaintext"
-          name="bio"
-          id="bio"></textarea>
-      </div>
-    </div>
-    <!-- <div class="row">
-      <div class="column">
-        <label class="form-label mt-3" for="profile_pic">Profile Picture</label>
-        <input
-          readonly
-          class="form-control-plaintext"
-          type="file"
-          name="profile_pic"
-          id="profile_pic"
-        />
-      </div>
-    </div> -->
-    
-    <input id="submit_btn" class="btn btn-success mt-3" type="submit" value="Submit" disabled>
 
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        >Username</span
+      >
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+        id="username"
+        value="{{current_user.username}}"
+        disabled
+      />
+    </div>
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+      <input
+        class="col-5 d-inline-block form-control"
+        type="text"
+        name="name"
+        id="name"
+        value="{{current_user.name}}"
+        disabled
+      />
+    </div>
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+      <input
+        class="col-5 d-inline-block form-control"
+        type="email"
+        name="email"
+        id="email"
+        value="{{current_user.email}}"
+        disabled
+      />
+    </div>
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        >Phone No.</span
+      >
+      <input
+        class="col-5 d-inline-block form-control"
+        type="text"
+        name="phone"
+        id="phone"
+        value="{{ current_user.phn }} "
+        disabled
+      />
+    </div>
+    <div class="input-group mt-4">
+      <span class="input-group-text" id="inputGroup-sizing-default">Bio</span>
+      <textarea
+        class="col-5 d-inline-block form-control"
+        name="bio"
+        id="bio"
+        value="{{current_user.bio}}"
+        disabled
+      ></textarea>
+    </div>
+
+    <input
+      id="submit_btn"
+      class="btn btn-success mt-3"
+      type="submit"
+      value="Submit"
+      disabled
+    />
   </form>
 </div>

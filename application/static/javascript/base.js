@@ -25,7 +25,6 @@ if (form != null) {
     });
   });
 }
-
 signup_form = document.getElementById("signup_form");
 if (signup_form != null) {
   signup_form.addEventListener("submit", (e) => {
@@ -59,7 +58,6 @@ if (signup_form != null) {
     });
   });
 }
-
 user_post = document.getElementById("postcard");
 if (user_post != null) {
   user_post.addEventListener("submit", (e) => {
@@ -74,12 +72,11 @@ if (user_post != null) {
         // window.location.href = "/login";
         console.log(response);
       } else {
-        console.log('not ok');  
+        console.log("not ok");
       }
     });
   });
 }
-
 function logout() {
   fetch("/api/logout", {
     method: "POST",
@@ -94,7 +91,6 @@ function logout() {
     }
   });
 }
-
 follow_form = document.getElementById("follow_form");
 if (follow_form != null) {
   follow_form.addEventListener("submit", (e) => {
@@ -124,111 +120,88 @@ if (follow_form != null) {
         console.log(response.text());
 
         console.log(response.message);
-  
+
         console.log(response.status);
       }
     });
   });
 }
 
+// user search api
 username_input = document.getElementById("username-input");
 if (username_input != null) {
   display_username = document.getElementById("display-username");
 
   username_input.addEventListener("keyup", (e) => {
-    fetch(`/api/user/${username_input.value}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        while (display_username.firstChild) {
-          display_username.removeChild(display_username.firstChild);
-        }
-        for (let i = 0; i < data.length; i++) {
-          // console.log(data[i]);
-          const para = document.createElement("p");
-          para.textContent = `${data[i].username}`;
-          display_username.appendChild(para);
-        }
-      });
+    if (username_input.value == "") {
+      while (display_username.firstChild) {
+        display_username.removeChild(display_username.firstChild);
+      }
+    } else {
+      fetch(`/api/user/${username_input.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          while (display_username.firstChild) {
+            display_username.removeChild(display_username.firstChild);
+          }
+          for (let i = 0; i < data.length; i++) {
+            // const para = document.createElement("p");
+            // para.textContent = `${data[i].username}`;
+            // display_username.appendChild(para);
+            display_username.innerHTML += `<div class="card mb-3" style="max-width: 540px">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                  class="img-fluid rounded-start"
+                  alt="avatar"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="/${data[i].username}">${data[i].username}</a></h5>
+                  <p class="card-text" style="font-size: 0.8em;">${data[i].name}</p>
+                </div>
+              </div>
+            </div>
+          </div>`;
+          }
+        });
+    }
   });
 }
 
-// if (window.location.pathname == "/") {
-//   fetch("/api/feed", {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log(data);
-//       console.log(response);
-//     });
-// }
-
+// edit profile
 if (
   window.location.pathname == "/settings" ||
   window.location.pathname == "/settings/edit_profile"
 ) {
   edit_profile = document.getElementById("edit_profile");
   function editProfile() {
-    for (let i = 1; i < edit_profile.elements.length - 1; i++) {
-      edit_profile[i].setAttribute("class", "form-control");
-      edit_profile[i].removeAttribute("readonly");
+    for (let i = 0; i < edit_profile.elements.length; i++) {
+      edit_profile[i].removeAttribute("disabled");
     }
-    edit_profile.submit_btn.removeAttribute("disabled");
   }
-
-  fetch("/api/user", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      edit_profile.username.value = data.username;
-      edit_profile.email.value = data.email;
-      edit_profile.name.value = data.name;
-      edit_profile.phone.value = data.phn;
-      edit_profile.bio.value = data.bio;
-    });
-
   edit_profile.addEventListener("submit", (e) => {
     e.preventDefault();
-    let username = edit_profile.username.value;
-    let email = edit_profile.email.value;
-    let name = edit_profile.name.value;
-    let phn = edit_profile.phone.value;
-    let bio = edit_profile.bio.value;
-
-    let data = {
-      username: username,
-      email: email,
-      name: name,
-      phn: phn,
-      bio: bio,
-    };
+    formData = new FormData(edit_profile);
     fetch("/api/user", {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     }).then((response) => {
-      window.location.href = "/settings";
+      if (response.ok) window.location.href = "/settings";
+      else console.log("error");
     });
   });
 }
 
 if (window.location.pathname == "/settings/delete_account") {
-  delete_profile = document.getElementById('delete-account');
+  delete_profile = document.getElementById("delete-account");
 
   delete_profile.addEventListener("click", (e) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_restful import Resource, Api
 
-UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/..')
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads')
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 # Initialize Flask app with the template folder address

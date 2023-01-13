@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(128))
     phn = db.Column(db.Integer(), nullable=True)
     bio = db.Column(db.Text, nullable = True)
+    profile_picture = db.Column(db.String(500), nullable=True)
     password = db.Column(db.String(128), nullable= False)
     # Defining the authors of the posts by linking the post to the specific user
     posts = db.relationship('Post'  , backref='author', lazy=True, cascade='all, delete')
@@ -59,17 +60,16 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
-class Follow(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    following_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
-
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(255))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', backref=db.backref('images', lazy='dynamic'))
+
+class Follow(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    following_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -104,3 +104,4 @@ class Like(db.Model):
     
     def __repr__(self):
         return f"Like('{self.author}', '{self.date_posted}')"
+
