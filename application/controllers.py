@@ -20,8 +20,6 @@ def login():
         # flash('You are already logged in')
         return redirect(url_for('index'))
 
-# Create a user loader function takes care of reloading the user object from the user ID stored in the session
-
 @app.route('/')
 @login_required
 def index():
@@ -37,27 +35,10 @@ def settings(active):
         active = 'edit_profile'
     return render_template('settings.html', active=active)
 
-
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
     return render_template('search.html')
-
-
-@app.route('/post', methods=['POST'])
-def posts():
-    if request.method == 'POST':
-        content = request.form['post_content']
-        author = User.query.filter_by(username = current_user.username).first().username
-
-        post = Post(title=content, username=author)
-        db.session.add(post)
-        db.session.commit()
-        print(User.query.filter_by(username = current_user.username).first().username)
-        print('post uploaded sucessfully')
-        
-        return redirect(url_for("index"))
-
 
 @app.route('/<username>')
 @login_required
@@ -68,7 +49,9 @@ def display_user(username):
     else:
         return '''<p>Wrong username entered.... Update this function and make it an error page and give  button to go to search page or index page</p>'''
 
-
+@app.route('/test')
+def Test():
+    return render_template('test.html')
 
 @app.errorhandler(401)
 def page_not_found(e):

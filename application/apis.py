@@ -137,11 +137,11 @@ class UserAPI(Resource):
         db.session.commit()
         return '', 200
 
-
 post_get = {
     'title': fields.String,
     'content': fields.String,
-    'author': fields.String,
+    'username': fields.String,
+    'last_modified': fields.DateTime,
 }
 # Url: /api/posts, /api/posts/<post_id>
 class PostAPI(Resource):

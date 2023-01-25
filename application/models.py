@@ -53,10 +53,9 @@ class Post(db.Model):
     username = db.Column(db.String(50), db.ForeignKey('user.username'))
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     last_modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    comments = db.relationship('Comment', backref='postid', lazy=True, cascade='all, delete')
     likes = db.relationship("Like", backref='postid', lazy=True, cascade='all, delete')
-
+    comments = db.relationship('Comment', backref='postid', lazy=True, cascade='all, delete')
+    
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
