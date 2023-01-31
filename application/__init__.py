@@ -24,17 +24,20 @@ api = Api(app)
 app.app_context().push()
 
 login_manager = LoginManager(app)
-# login_manager.login_view = "login"
-# login_manager.login_message_category = "info"
 
 from application import controllers
 
-from application.apis import *
+# Api resource mapping with its path
+from application.apis.auth_api import *
 api.add_resource(UserSignup,'/api/signup')
 api.add_resource(UserLogin, '/api/login')
 api.add_resource(UserLogout, '/api/logout')
+
+from application.apis.user_api import *
 api.add_resource(UserAPI, '/api/user' ,'/api/<string:username>')
-api.add_resource(PostAPI, '/api/posts', '/api/posts/<int:post_id>')
 api.add_resource(FollowApi, '/api/follow')
 api.add_resource(SearchUser, '/api/user/<username>')
+
+from application.apis.post_api import *
+api.add_resource(PostAPI, '/api/posts', '/api/posts/<int:post_id>')
 api.add_resource(Feed, '/api/feed')
