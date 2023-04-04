@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
     # All the comments that a particular user has posted
     comments = db.relationship('Comment', backref='commenter', lazy=True, cascade='all, delete')
     # All the posts that this user has liked
-    likes = db.relationship('Like', backref='liker', lazy=True, cascade='all, delete') 
+    likes = db.relationship('Like', backref='liker', lazy=True, cascade='all, delete')
     
     
     following = db.relationship("User",

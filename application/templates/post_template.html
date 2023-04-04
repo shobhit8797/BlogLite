@@ -56,7 +56,7 @@
       <p class="card-text mt-3">{{ post.content }}</p>
     </div>
     <div class="card-footer text-muted d-flex justify-content-between">
-      <button class="btn btn-primary">Like</button>
+      <button id='like' onclick='likePost({{post.id}})' class="btn btn-primary">Like</button>
       <button class="btn btn-secondary">Comment</button>
     </div>
   </div>

@@ -216,3 +216,20 @@ if (window.location.pathname == "/settings/delete_account") {
     });
   });
 }
+
+
+// post like
+function likePost(post_id) {
+  fetch(`/api/like/${post_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) {
+      console.log(response);
+    } else {
+      console.log(response);
+    }
+  });
+}

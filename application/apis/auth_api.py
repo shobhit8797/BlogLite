@@ -1,11 +1,19 @@
-from apis import *
+import os
+from datetime import datetime
+import werkzeug
+from application import db
+from application.models import Follow, Image, Post, User
+from application.request_code import *
+from flask import request, jsonify
+from flask_login import login_required, current_user, login_user, logout_user
+from flask_restful import Resource
+from werkzeug.utils import secure_filename
 
 class UserLogin(Resource):
     def get(self):
         raise request_not_allowed(status_code=404, messasge='Not a valid request method')
     
     def post(self):
-
         username = request.get_json()['username']
         password = request.get_json()['password']
 
